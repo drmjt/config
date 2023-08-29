@@ -230,12 +230,6 @@ Set the timezone
 sudo timedatectl set-timezone 'Europe/London'
 ```
 
-Install ktorrent (at the time of writing requires geoip for seeing info about the torrent/peers)
-
-```
-sudo pacman -S geoip ktorrent
-```
-
 # TODO
 
 ## DNS setup 
