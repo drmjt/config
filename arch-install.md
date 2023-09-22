@@ -205,12 +205,12 @@ KEYMAP=uk
 ```
 
 ## Install Desktop environment
-Install KDE with network manager
+Install KDE with network manager. Note that `libsamplerate` fixes some sound quality issues (crackling in some sections of music, notably vocal). This affects "automatic" resampling in VLC, pulseaudio, and pipewire, when resampling 44100Hz to 48000Hz for a 48000Hz Sennheiser DAC.
 
 ```
 pacman -S nm-connection-editor network-manager-applet   \
           plasma plasma-wayland-session dolphin konsole \
-          chromium kate okular gwenview
+          chromium kate okular gwenview libsamplerate
 systemctl enable NetworkManager
 systemctl enable sddm
 ```
