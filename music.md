@@ -36,3 +36,20 @@ Check flac files, only output on problems
 ```
 find -name "*.flac" -exec bash -c 'flac -wst "{}" 2>/dev/null || printf '%3d %s\n' "$?" "{}"' \;
 ```
+
+## Check that the files are OK
+
+Count the number of files, and look for empty files
+```
+find -name "*.flac" -not -empty | wc -l
+```
+
+Use flac tool to check for errors
+```
+find -name "*.flac" -exec bash -c 'flac -wst "{}" 2>/dev/null || printf '%3d %s\n' "$?" "{}"' \;
+```
+
+Compare just the audio content with a backup
+```
+find -name "*.flac" -exec bash -c 'ffmpeg -y -i "{}" /tmp/1.wav; ffmpeg -y -i "../flac.bak/{}" /tmp/2.wav; diff /tmp/1.wav /tmp/2.wav >> ~/result ' \;
+```
