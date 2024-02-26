@@ -167,7 +167,7 @@ Set the root password, then create a new user. The zsh shell with grml configura
 ```
 passwd
 pacman -S zsh grml-zsh-config vi
-usermod -s /etc/zsh root
+usermod -s /bin/zsh root
 useradd -m -G wheel -s /bin/zsh mathew
 passwd mathew
 ```
