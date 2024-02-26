@@ -1,0 +1,8 @@
+unsetopt share_history
+unsetopt auto_remove_slash
+
+export GPG_TTY=$(tty)
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+# Required in arch to avoid the error: ... from agent: agent refused operation
+gpg-connect-agent updatestartuptty /bye > /dev/null
