@@ -35,6 +35,7 @@ print
 ## Set up encryption
 
 These modules should already be loaded: `modprobe dm-crypt && modprobe dm-mod`
+You might want to luksFormat with the argument --sector-size=4096, if that is the native block size of your disk.
 
 ```
 cryptsetup luksFormat -v -s 512 -h sha512 /dev/sda3
@@ -60,7 +61,7 @@ lvcreate -n root -l 100%FREE arch
 ```
 mkfs.fat -F32 /dev/sda1
 mkfs.ext4 /dev/sda2
-mkfs.xfs -L root /dev/mapper/arch-root
+mkfs.btrfs -L root /dev/mapper/arch-root
 mkswap /dev/mapper/arch-swap
 ```
 
@@ -91,10 +92,10 @@ lsblk -f
 
 
 ## Bootstrap the new system
-If a btrfs root filesystem was chosen instead of xfs, replace `xfsprogs` with `btrfs-progs`
+If a xfs filesystem was chosen instead of btrfs, replace `btrfs-progs` with `xfsprogs`
 ```
-pacstrap /mnt base base-devel efibootmgr vim dialog xfsprogs grub mkinitcpio \
-              linux linux-firmware lvm2 --noconfirm
+pacstrap /mnt base base-devel efibootmgr vim dialog btrfs-progs grub \
+              mkinitcpio linux linux-firmware lvm2 --noconfirm
 
 genfstab -U -p /mnt >> /mnt/etc/fstab
 
@@ -162,13 +163,13 @@ Consider copying the file `crypto_keyfile.bin` to the encrypted filesystem.
 
 ## User configuration
 
-Set the root password, then create a new user. The zsh shell with grml configuration is what is used in the arch install disk at the time of writing.
+Set the root password, then create a new user. The zsh shell with grml configuration is what is used in the arch install disk at the time of writing (packages: zsh grml-zsh-config)
 
 ```
 passwd
-pacman -S zsh grml-zsh-config vi
-usermod -s /bin/zsh root
-useradd -m -G wheel -s /bin/zsh mathew
+pacman -S bash vi
+usermod -s /bin/bash root
+useradd -m -G wheel -s /bin/bash mathew
 passwd mathew
 ```
 
@@ -205,7 +206,18 @@ KEYMAP=uk
 ```
 
 ## Install Desktop environment
-Install KDE with network manager. Note that `libsamplerate` fixes some sound quality issues (crackling in some sections of music, notably vocal). This affects "automatic" resampling in VLC, pulseaudio, and pipewire, when resampling 44100Hz to 48000Hz for a 48000Hz Sennheiser DAC.
+
+Install Gnome
+
+```
+pacman -S gnome gnome-extra nm-connection-editor networkmanager
+systemctl enable NetworkManager
+systemctl enable gdm
+```
+
+By default, gnome will include gdm.
+
+Alternatively, install KDE with network manager. Note that `libsamplerate` fixes some sound quality issues (crackling in some sections of music, notably vocal). This affects "automatic" resampling in VLC, pulseaudio, and pipewire, when resampling 44100Hz to 48000Hz for a 48000Hz Sennheiser DAC.
 
 ```
 pacman -S nm-connection-editor network-manager-applet   \

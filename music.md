@@ -39,10 +39,10 @@ find . -type f -name "*.flac" -print0|xargs -0 -P 16 -I {} sh -c 'opusenc --bitr
 ```
 
 ### Check the audio contents
-Compare the audio contents of two files, in this case opus, but can be used for any format. For example compare before and after writing tags, which for some formats could affect volume, gapless playback, etc.
+Compare the audio contents of two files, in this case opus, but can be used for any format. For example compare before and after writing tags, which for some formats could affect volume, gapless playback, etc. Note: even wav files can contain metadata in the header, which can make the comparison fail if you are testing files before and after changing the tags. Use -map_metadata -1 to avoid this.
 
 ```
-find ./dir1/ -name "*.opus" -exec bash -c 'ffmpeg -y -i "{}" /tmp/1.wav; ffmpeg -y -i "./dir2/{}" /tmp/2.wav; diff /tmp/1.wav /tmp/2.wav || echo "{}" >> ~/result ' \;
+find ./ -name "*.opus" -exec bash -c 'ffmpeg -y -i "{}" -map_metadata -1 /tmp/1.wav; ffmpeg -y -i "../copy_dir/{}" -map_metadata -1 /tmp/2.wav; diff /tmp/1.wav /tmp/2.wav || echo "{}" >> ~/result ' \;
 ```
 
 
