@@ -1,6 +1,12 @@
 
 # Music
 
+## Install required programs
+
+```
+sudo apt install flac atomicparsley opus-tools
+```
+
 ## Prepare flac files
 
 ### Cover art for flacs
