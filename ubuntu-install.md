@@ -52,12 +52,28 @@ zpool create -o ashift=12 -o autotrim=on -O normalization=formD -O acltype=posix
 zpool create -o ashift=12 -o autotrim=on -O normalization=formD -O acltype=posixacl -O compression=lz4 -O dnodesize=auto -O relatime=on -O sync=standard -O xattr=sa -O encryption=on -O keylocation=file:///run/keystore/rpool/system.key -O keyformat=raw reclusiam /dev/disk/by-id/ata-MTFDDAK3T8TCB_18111BB81335
 
 zfs create librarium/docker
-
 ```
 
 Check that the cache files have been updated
 ```
 cat /etc/zfs/zfs-list.cache/librarium
+```
+
+Back up the keystore to the encrypted disks, make sure the key is not encrypted with the key!
+```
+zfs snapshot rpool/keystore@snap1
+zfs send rpool/keystore@snap1 | zfs receive -o encryption=off reclusiam/keystore
+zfs send rpool/keystore@snap1 | zfs receive -o encryption=off reclusiam/keystore
+```
+
+The LUKS device should be accessible here
+```
+cryptsetup luksDump /dev/zvol/librarium/keystore
+```
+
+Check which data is encrypted
+```
+zfs list -o name,encryption
 ```
 
 ## Docker root directory
