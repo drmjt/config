@@ -115,3 +115,19 @@ Create/edit the file '''/etc/docker/daemon.json'''  to add
 }
 ```
 
+
+## ZFS encryption with passphrase
+
+Options taken from above, but with a prompt for a passphrase instead of a keyfile.
+
+```
+sudo zpool create -o ashift=12 -o autotrim=on -O normalization=formD -O acltype=posixacl -O compression=lz4 -O dnodesize=auto -O relatime=on -O sync=standard -O xattr=sa -O encryption=on -O keylocation=prompt -O keyformat=passphrase citadel /dev/disk/by-id/usb-Seagate_One_Touch_SSD_00000000NAE70KS6-0:0
+```
+
+Mount using
+
+```
+sudo zfs load-key citadel
+sudo zfs mount citadel/reclusiam
+```
+
