@@ -1,6 +1,35 @@
 
 # Ubuntu 24.04
 
+## Bug in current install
+Get a warning at boot:
+**WARNING: Option 'size' missing in crypttab for plain dm-crypt mapping root
+
+Check what values to put in crypttab
+```
+sudo cryptsetup status dm_crypt-0
+```
+
+Then the line in crypttab should be like the following:
+```
+dm_crypt-0 PARTUUID=... /dev/urandom swap,initramfs,plain,offset=0,cipher=aes-cbc-essiv:sha256,size=256
+```
+
+Then enable
+```
+sudo swapoff -a
+sudo update-initramfs -c -k all
+sudo swapon -a
+```
+
+Note: There still could be a warning saying 
+**WARNING: Resume target dm_crypt-0 uses a key file
+
+This is likely a false positive because the initramfs option in crypttab
+enables the disk to open by initramfs, early in the boot when a key file
+might not be available, which is not the case for /dev/random.
+The initramfs option doesn't *seem* to make it a Resume target.
+
 ## Opt out of beta testing updates
 
 Create the file 
