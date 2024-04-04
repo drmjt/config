@@ -69,7 +69,8 @@ The package mesa-dri-drivers in EL9 is missing vaapi hardware support. Need to r
 Download the source rpm, then:
 
 ```
-sudo dnf in yum-utils
+sudo dnf in yum-utils rpm-build
+dnf download --source mesa-dri-drivers
 sudo yum-builddep ./mesa-23.1.4-1.el9.src.rpm
 rpm -i ./mesa-23.1.4-1.el9.src.rpm
 cd ~/rpmbuild/SPECS
@@ -92,3 +93,28 @@ sudo rpm -i --reinstall ~/rpmbuild/RPMS/x86_64/mesa-dri-drivers-23.1.4-1.el9.x86
 TODO: Ideally, this package would be renamed mesa-dri-drivers-freeworld,
 and would replace the old package using 'dnf swap'.
 
+# Experimental
+
+## Luks encryption with integrity
+
+```
+cryptsetup --type luks2 --cipher aes-xts-plain64 --hash sha512 --iter-time 5000 --key-size 512 --pbkdf argon2id --use-random --verify-passphrase --sector-size 4096 --integrity hmac-sha512 luksFormat /dev/sda
+cryptsetup luksOpen --persistent --integrity-no-journal /dev/sda reclusiam
+mkfs.xfs -b size=4096 -m bigtime=1 -L reclusiam -f /dev/mapper/reclusiam
+```
+
+## Building from source on Red Hat
+
+```
+dnf in rpm-build yum-utils
+dnf info gstreamer1-rtsp-server
+subscription-manager repos |egrep "rhel-9-for-x86_64-appstream"
+subscription-manager repos --enable=rhel-9-for-x86_64-appstream-source-rpms
+yumdownloader --source  gstreamer1-rtsp-server
+sudo yum-builddep ./gstreamer1-rtsp-server-1.22.1-1.el9.src.rpm
+rpm -i ./gstreamer1-rtsp-server-1.22.1-1.el9.src.rpm
+cd ~/rpmbuild/SPECS
+rpmbuild -ba gstreamer1-rtsp-server.spec
+cd ~/rpmbuild/RPMS/x86_64/
+sudo rpm -i ./gstreamer1-rtsp-server-1.22.1-1.el9.x86_64.rpm ./gstreamer1-rtsp-server-devel-1.22.1-1.el9.x86_64.rpm
+```
