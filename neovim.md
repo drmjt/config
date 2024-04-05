@@ -23,3 +23,11 @@ and hiding of things like backticks in this markdown file.
 vim.opt.relativenumber = false
 vim.opt.conceallevel = 0
 ```
+
+To disable automatic updates edit the file ```~/.config/nvim/lua/config/lazy.lua``` to disable lazy's checker
+
+```
+checker = { enabled = false }, -- automatically check for plugin updates
+```
+
+Updates can still be performed from inside neovim.
