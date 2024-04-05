@@ -11,6 +11,22 @@ sudo -u gdm dbus-launch gsettings set org.gnome.settings-daemon.plugins.power sl
 xhost - local:
 ```
 
+## Text editor / C++ IDE
+
+Install Helix with clangd
+
+```
+sudo dnf in helix clangd
+```
+
+Add configuration to the file ```~/.config/helix/config.toml```
+
+```
+theme = "adwaita-dark"
+
+[editor]
+auto-pairs = false
+```
 
 ## Installing dependencies for watchman development
 
@@ -19,7 +35,7 @@ General Dependencies, including from EPEL
 sudo dnf config-manager --set-enabled crb
 sudo dnf install epel-release
 
-sudo dnf install git git-lfs ninja-build patch wget meson make cmake         \
+sudo dnf install git git-lfs ninja-build patch wget meson make               \
      binutils clang gcc gcc-c++ libasan libtsan libubsan glm-devel           \
      pkgconf-pkg-config mosquitto-devel libconfig-devel                      \
      glslang vulkan-validation-layers vulkan-headers vulkan-tools            \
