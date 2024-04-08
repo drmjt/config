@@ -16,7 +16,7 @@ xhost - local:
 Install Helix with clangd
 
 ```
-sudo dnf in helix clangd
+sudo dnf in helix clang-tools-extra
 ```
 
 Add configuration to the file ```~/.config/helix/config.toml```
@@ -26,6 +26,7 @@ theme = "adwaita-dark"
 
 [editor]
 auto-pairs = false
+bufferline = "always"
 ```
 
 ## Installing dependencies for watchman development
@@ -73,13 +74,22 @@ sudo dnf in ffmpeg-devel gstreamer1-libav gstreamer1-plugins-bad-freeworld   \
      gstreamer1-plugins-ugly mesa-dri-drivers
 ```
 
-Note: The version of gcc and cmake in EL9.3 are too old. Install cmake from source.
+Note: The version of gcc and cmake in EL9.3 are too old. Extract cmake linux binaries to /opt,
+and symbolic link the cmake binary to ```/usr/local/sbin/cmake```
 
 ```
 sudo dnf install gcc-toolset-13
 scl enable gcc-toolset-13 bash
 gcc --version
 ```
+
+For clangd to pick up the newer standard library headers, create a ```.clangd``` file in a
+parent/root of the source code folders, containing
+```
+CompileFlags:                     # Tweak the parse settings
+  Add: [ -stdlib++-isystem/opt/rh/gcc-toolset-13/root/usr/include/c++/13, -stdlib++-isystem/opt/rh/gcc-toolset-13/root/usr/include/c++/13/x86_64-redhat-linux ]
+```
+
 
 The package mesa-dri-drivers in EL9 is missing vaapi hardware support. Need to recompile.
 Download the source rpm, then:
@@ -109,14 +119,15 @@ sudo rpm -i --reinstall ~/rpmbuild/RPMS/x86_64/mesa-dri-drivers-23.1.4-1.el9.x86
 TODO: Ideally, this package would be renamed mesa-dri-drivers-freeworld,
 and would replace the old package using 'dnf swap'.
 
-# Experimental
+## Luks encryption
 
-## Luks encryption with integrity
+Currently integrity is too slow. Even with the option --integrity-no-journal, writes seeemed to be ~25MB/s.
+An example of LUKS parameters:
 
 ```
-cryptsetup --type luks2 --cipher aes-xts-plain64 --hash sha512 --iter-time 5000 --key-size 512 --pbkdf argon2id --use-random --verify-passphrase --sector-size 4096 --integrity hmac-sha512 luksFormat /dev/sda
-cryptsetup luksOpen --persistent --integrity-no-journal /dev/sda reclusiam
-mkfs.xfs -b size=4096 -m bigtime=1 -L reclusiam -f /dev/mapper/reclusiam
+cryptsetup --type luks2 --cipher aes-xts-plain64 --hash sha512 --iter-time 5000 --key-size 512 --pbkdf argon2id --use-random --verify-passphrase --sector-size 4096 luksFormat /dev/sda
+cryptsetup luksOpen --persistent /dev/sda karak
+mkfs.xfs -b size=4096 -m bigtime=1 -L karak -f /dev/mapper/karak
 ```
 
 ## Building from source on Red Hat
