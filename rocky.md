@@ -1,6 +1,17 @@
 
 # Rocky 9.3
 
+## Enabling mDNS (.local addresses, including finding wifi printer)
+
+Install the library that provides mdns support, and allow it to pass through the firewall
+
+```
+sudo dnf in nss-mdns
+sudo systemctl restart NetworkManager
+sudo firewall-cmd --permanent --add-service=mdns
+sudo systemctl restart firewalld
+```
+
 ## Disabling auto-suspend including in GDM
 
 ```
@@ -145,3 +156,13 @@ rpmbuild -ba gstreamer1-rtsp-server.spec
 cd ~/rpmbuild/RPMS/x86_64/
 sudo rpm -i ./gstreamer1-rtsp-server-1.22.1-1.el9.x86_64.rpm ./gstreamer1-rtsp-server-devel-1.22.1-1.el9.x86_64.rpm
 ```
+
+# Building Yocto in Podman
+
+To work with selinux, the run command is
+
+```
+docker --storage-opt overlay.mount_program=/usr/bin/fuse-overlayfs --storage-opt overlay.mountopt=nodev,metacopy=on,noxattrs=1 run -v ~/podman:/mnt:z -it watch-station/scarthgap:base /bin/bash
+```
+
+Note that running as root will put the containers in the root partition, where Rocky might not have provided much space
