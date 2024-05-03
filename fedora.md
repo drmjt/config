@@ -34,7 +34,7 @@ bufferline = "always"
 General Dependencies
 ```
 
-sudo dnf install git git-lfs ninja-build patch wget meson make               \
+sudo dnf install git git-lfs ninja-build patch wget meson make cmake         \
      binutils clang gcc gcc-c++ libasan libtsan libubsan glm-devel           \
      pkgconf-pkg-config mosquitto-devel libconfig-devel                      \
      glslang vulkan-validation-layers vulkan-headers vulkan-tools            \
