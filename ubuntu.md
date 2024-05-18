@@ -72,7 +72,7 @@ sudo update-alternatives --install /usr/bin/cc cc /usr/bin/gcc 100
 ## Emacs configuration
 
 ```
-sudo apt install --no-install-recommends emacs elpa-lsp-ui elpa-lsp-mode elpa-treemacs elpa-which-key
+sudo apt install --no-install-recommends emacs elpa-lsp-ui elpa-lsp-mode elpa-lsp-treemacs elpa-treemacs elpa-which-key
 ```
 
 Copy `init.el` to `~/emacs.d/`.
