@@ -6,3 +6,9 @@ export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
 # Required in arch to avoid the error: ... from agent: agent refused operation
 gpg-connect-agent updatestartuptty /bye > /dev/null
+
+# Coloured GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# Open emacs in the terminal
+alias emacs='emacs -nw'

@@ -2,6 +2,10 @@
 ;; Install plugins from Ubuntu repos:
 ;; sudo apt install --no-install-recommends emacs elpa-lsp-ui elpa-lsp-treemacs elpa-lsp-mode elpa-treemacs elpa-which-key
 
+;; Disable auto-indent mode. There might be a way to make indents
+;; match clang-format instead?
+(electric-indent-mode 0)
+
 ;; Disable warnings from out-of-date / buggy packages
 (let ((byte-compile-warnings nil)))
 
@@ -56,7 +60,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(wombat))
+ '(custom-enabled-themes nil)
  '(inhibit-startup-screen t)
  '(package-selected-packages '(treemacs)))
 (custom-set-faces
@@ -64,4 +68,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:family "AnonymicePro Nerd Font" :foundry "mlss" :slant normal :weight regular :height 143 :width normal)))))
