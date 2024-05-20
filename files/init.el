@@ -6,10 +6,6 @@
 ;; match clang-format instead?
 (electric-indent-mode 0)
 
-;; Disable warnings from out-of-date / buggy packages
-(setq byte-compile-warnings nil)
-(setq byte-compile-disable-warnings t)
-
 ;; Configure backups
 ;; Alternatively, can be disabled with:
 ;; (setq make-backup-files nil)
@@ -19,7 +15,6 @@
   kept-new-versions 9
   kept-old-versions 5
   version-control t)
-
 
 (use-package treemacs
   ;;:ensure t

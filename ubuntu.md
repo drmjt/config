@@ -77,6 +77,9 @@ sudo apt install --no-install-recommends emacs elpa-lsp-ui elpa-lsp-mode elpa-ls
 
 Copy `init.el` to `~/emacs.d/`.
 
+The lsp-treemacs package is currently missing icons. These can be downloaded from https://github.com/emacs-lsp/lsp-treemacs/tree/0.4
+(for 0.4 release). Then copied, eg ```sudo cp -r icons /usr/share/emacs/site-lisp/elpa/lsp-treemacs-0.4/```
+
 
 ## Encrypted ZFS
 
