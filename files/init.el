@@ -7,7 +7,8 @@
 (electric-indent-mode 0)
 
 ;; Disable warnings from out-of-date / buggy packages
-(let ((byte-compile-warnings nil)))
+(setq byte-compile-warnings nil)
+(setq byte-compile-disable-warnings t)
 
 ;; Configure backups
 ;; Alternatively, can be disabled with:
