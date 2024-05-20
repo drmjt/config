@@ -9,6 +9,17 @@
 ;; Disable warnings from out-of-date / buggy packages
 (let ((byte-compile-warnings nil)))
 
+;; Configure backups
+;; Alternatively, can be disabled with:
+;; (setq make-backup-files nil)
+(setq backup-directory-alist `(("." . "~/.emacs_backups")))
+(setq backup-by-copying t)
+(setq delete-old-versions t
+  kept-new-versions 9
+  kept-old-versions 5
+  version-control t)
+
+
 (use-package treemacs
   ;;:ensure t
   :init
@@ -62,10 +73,9 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes nil)
  '(inhibit-startup-screen t)
- '(package-selected-packages '(treemacs)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "AnonymicePro Nerd Font" :foundry "mlss" :slant normal :weight regular :height 143 :width normal)))))
+ '(default ((t (:family "Hack Nerd Font" :foundry "SRC" :slant normal :weight regular :height 120 :width normal)))))
