@@ -72,13 +72,21 @@ sudo update-alternatives --install /usr/bin/cc cc /usr/bin/gcc 100
 ## Emacs configuration
 
 ```
-sudo apt install --no-install-recommends emacs elpa-lsp-ui elpa-lsp-mode elpa-lsp-treemacs elpa-treemacs elpa-which-key
+sudo apt install --no-install-recommends emacs elpa-lsp-ui elpa-lsp-mode elpa-lsp-treemacs elpa-treemacs elpa-which-key elpa-company
 ```
 
 Copy `init.el` to `~/emacs.d/`.
 
-The lsp-treemacs package is currently missing icons. These can be downloaded from https://github.com/emacs-lsp/lsp-treemacs/tree/0.4
-(for 0.4 release). Then copied, eg ```sudo cp -r icons /usr/share/emacs/site-lisp/elpa/lsp-treemacs-0.4/```
+The lsp-treemacs and company packages are currently missing icons. These can be downloaded from:
+```
+https://github.com/emacs-lsp/lsp-treemacs/tree/0.4
+https://github.com/company-mode/company-mode/tree/0.10.0
+```
+Then copied, e.g.
+```
+sudo cp -r lsp-treemacs-0.4/icons  /usr/share/emacs/site-lisp/elpa/lsp-treemacs-0.4/
+sudo cp -r company-mode-0.10.0/icons  /usr/share/emacs/site-lisp/elpa/company-0.10.0/
+```
 
 
 ## Encrypted ZFS

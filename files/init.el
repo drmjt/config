@@ -26,9 +26,11 @@
   kept-old-versions 5
   version-control t)
 
-(use-package company-mode
+(use-package company
   ;;:ensure t
   )
+;; Use TAB for completion, instead of RET
+(add-hook 'after-init-hook 'company-tng-mode)
 
 (use-package treemacs
   ;;:ensure t
@@ -60,8 +62,6 @@
 (use-package lsp-treemacs
   ;;:ensure t
   :commands lsp-treemacs-errors-list)
-;; For completion. Ubuntu has elpa-ivy, but not elpa-lsp-ivy?
-;; (use-package lsp-ivy :ensure t :commands lsp-ivy-workspace-symbol)
 ;; optionally if you want to use debugger
 ;; (use-package dap-mode :ensure t)
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
@@ -83,9 +83,11 @@
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes nil)
  '(inhibit-startup-screen t)
+ '(nil nil t)
+ '(package-selected-packages '(lsp-mode lsp-ui lsp-treemacs treemacs which-key company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Hack Nerd Font" :foundry "SRC" :slant normal :weight regular :height 110 :width normal))))))
+ '(default ((t (:family "Hack Nerd Font" :foundry "SRC" :slant normal :weight regular :height 110 :width normal)))))
