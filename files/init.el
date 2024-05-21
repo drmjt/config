@@ -1,6 +1,6 @@
 
 ;; Install plugins from Ubuntu repos:
-;; sudo apt install --no-install-recommends emacs elpa-lsp-ui elpa-lsp-treemacs elpa-lsp-mode elpa-treemacs elpa-which-key
+;; sudo apt install --no-install-recommends emacs elpa-lsp-ui elpa-lsp-treemacs elpa-lsp-mode elpa-treemacs elpa-which-key elpa-company
 
 ;; Disable auto-indent mode. There might be a way to make indents
 ;; match clang-format instead?
@@ -25,6 +25,10 @@
   kept-new-versions 9
   kept-old-versions 5
   version-control t)
+
+(use-package company-mode
+  ;;:ensure t
+  )
 
 (use-package treemacs
   ;;:ensure t
