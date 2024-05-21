@@ -5,6 +5,16 @@
 ;; Disable auto-indent mode. There might be a way to make indents
 ;; match clang-format instead?
 (electric-indent-mode 0)
+;; Similar formatting options to my clang-format
+(c-add-style "microsoft"
+          '("stroustrup"
+            (c-offsets-alist
+             (innamespace . -)
+             (inline-open . 0)
+             (inher-cont . c-lineup-multi-inher)
+             (arglist-cont-nonempty . +)
+             (template-args-cont . +))))
+(setq c-default-style "microsoft")
 
 ;; Configure backups
 ;; Alternatively, can be disabled with:
