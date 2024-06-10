@@ -2,6 +2,14 @@
 ;; Install plugins from Ubuntu repos:
 ;; sudo apt install --no-install-recommends emacs elpa-lsp-ui elpa-lsp-treemacs elpa-lsp-mode elpa-treemacs elpa-which-key elpa-company
 
+;; Line numbers, except in treemacs window
+(global-display-line-numbers-mode 1)
+(add-hook 'treemacs-mode-hook (lambda() (display-line-numbers-mode -1)))
+
+(setq mouse-wheel-scroll-amount '(15 ((shift) . 1)))
+(setq mouse-wheel-progressive-speed nil)
+(setq mouse-wheel-follow-mouse 't)
+
 ;; Disable auto-indent mode. There might be a way to make indents
 ;; match clang-format instead?
 (electric-indent-mode 0)
