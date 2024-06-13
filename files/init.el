@@ -64,6 +64,9 @@
          (c++-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
+;; disable automatic insertion of #includes
+(setq lsp-completion-enable-additional-text-edit nil)
+
 (use-package lsp-ui
   ;;:ensure t
   :commands lsp-ui-mode)

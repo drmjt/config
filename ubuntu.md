@@ -167,3 +167,9 @@ sudo zfs load-key citadel
 sudo zfs mount citadel/reclusiam
 ```
 
+
+## UMR
+```
+sudo apt install libpciaccess-dev libncurses-dev libdrm-dev llvm-18 libnanomsg-dev libjson-c-dev libsdl2-dev
+git clone https://gitlab.freedesktop.org/tomstdenis/umr
+```
