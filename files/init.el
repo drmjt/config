@@ -2,6 +2,10 @@
 ;; Install plugins from Ubuntu repos:
 ;; sudo apt install --no-install-recommends emacs elpa-lsp-ui elpa-lsp-treemacs elpa-lsp-mode elpa-treemacs elpa-which-key elpa-company
 
+(require 'package)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+
 ;; Line numbers, except in treemacs window
 (global-display-line-numbers-mode 1)
 (add-hook 'treemacs-mode-hook (lambda() (display-line-numbers-mode -1)))
@@ -35,13 +39,13 @@
   version-control t)
 
 (use-package company
-  ;;:ensure t
+  :ensure t
   )
 ;; Use TAB for completion, instead of RET
 (add-hook 'after-init-hook 'company-tng-mode)
 
 (use-package treemacs
-  ;;:ensure t
+  :ensure t
   :init
   :config
   :bind
@@ -55,7 +59,7 @@
         ("C-x t M-t" . treemacs-find-tag)))
 
 (use-package lsp-mode
-  ;;:ensure t
+  :ensure t
   :init
   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "<f4>")
@@ -68,17 +72,17 @@
 (setq lsp-completion-enable-additional-text-edit nil)
 
 (use-package lsp-ui
-  ;;:ensure t
+  :ensure t
   :commands lsp-ui-mode)
 (use-package lsp-treemacs
-  ;;:ensure t
+  :ensure t
   :commands lsp-treemacs-errors-list)
 ;; optionally if you want to use debugger
 ;; (use-package dap-mode :ensure t)
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 
 (use-package which-key
-    ;;:ensure t
+    :ensure t
     :config
     (which-key-mode))
 
@@ -95,7 +99,8 @@
  '(custom-enabled-themes nil)
  '(inhibit-startup-screen t)
  '(nil nil t)
- '(package-selected-packages '(lsp-mode lsp-ui lsp-treemacs treemacs which-key company)))
+ '(package-selected-packages
+   '(## lsp-mode lsp-ui lsp-treemacs treemacs which-key company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

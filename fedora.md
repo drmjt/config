@@ -1,7 +1,7 @@
 
 # Fedora 40
 
-## Disabling auto-suspend including in GDM
+## Disabling auto-suspend in Gnome including in GDM
 
 ```
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'
@@ -11,23 +11,9 @@ sudo -u gdm dbus-launch gsettings set org.gnome.settings-daemon.plugins.power sl
 xhost - local:
 ```
 
-## Text editor / C++ IDE
+## Brave / Chromium Hi-DPI scaling issues
 
-Install Helix with clangd
-
-```
-sudo dnf in helix clang-tools-extra
-```
-
-Add configuration to the file ```~/.config/helix/config.toml```
-
-```
-theme = "github_light"
-
-[editor]
-auto-pairs = false
-bufferline = "always"
-```
+Make sure Brave is using the wayland backend, by setting 'Preferred Ozone platform' in ```brave://flags/```
 
 ## Installing dependencies for watchman development
 
@@ -39,7 +25,7 @@ sudo dnf install git git-lfs ninja-build patch wget meson make cmake         \
      pkgconf-pkg-config mosquitto-devel libconfig-devel                      \
      glslang vulkan-validation-layers vulkan-headers vulkan-tools            \
      sqlite-devel  libwayland-client wayland-protocols-devel                 \
-     gstreamer1 gstreamer1-vaapi                                             \
+     ncurses-devel gstreamer1 gstreamer1-vaapi                               \
      gstreamer1-plugins-base gstreamer1-plugins-base-devel                   \
      gstreamer1-plugins-good gstreamer1-rtsp-server-devel
 

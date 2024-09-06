@@ -120,7 +120,7 @@ grub-install --efi-directory=/boot/efi
 We need the UUID of `/dev/sda3` (the `luks_lvm` partition) in `/etc/default/grub`, this can be achieved with
 ```
 ls -l /dev/disk/by-uuid | grep sda3 >> /etc/default/grub
-vim /etc/default/grub
+nano /etc/default/grub
 ```
 
 Add the crypt device for root to the linux cmdline:
@@ -152,7 +152,7 @@ dd if=/dev/random of=/crypto_keyfile.bin bs=512 count=10
 chmod 000 /crypto_keyfile.bin
 cryptsetup luksAddKey /dev/sdb /crypto_keyfile.bin
 ls -l /dev/disk/by-uuid | grep sdb >> /etc/crypttab
-vim /etc/crypttab
+nano /etc/crypttab
 ```
 Add the line
 ```
@@ -167,7 +167,7 @@ Set the root password, then create a new user. The zsh shell with grml configura
 
 ```
 passwd
-pacman -S bash vi
+pacman -S bash bash-completion nano
 usermod -s /bin/bash root
 useradd -m -G wheel -s /bin/bash mathew
 passwd mathew
@@ -175,6 +175,7 @@ passwd mathew
 
 Add wheel to sudoers by uncommenting the line for `%wheel` in the sudoers file, using the command
 ```
+export EDITOR=nano
 visudo
 ```
 
@@ -182,12 +183,12 @@ visudo
 ## Locale and keyboard
 `localectl` doesn't work in the chroot, but it is easy enough to set the locale manually.
 ```
-vim /etc/locale.gen
+nano /etc/locale.gen
 ```
 Uncomment `en_GB.UTF-8`
 ```
 locale-gen
-vim /etc/locale.conf
+nano /etc/locale.conf
 ```
 Add the line
 
@@ -197,7 +198,7 @@ LANG=en_GB.UTF-8
 
 Next set the console keyboard map
 ```
-vim /etc/vconsole.conf
+nano /etc/vconsole.conf
 ``` 
 Add the line
 
@@ -207,25 +208,29 @@ KEYMAP=uk
 
 ## Install Desktop environment
 
-Install Gnome
+Install Hyprland
 
 ```
-pacman -S gnome gnome-extra nm-connection-editor networkmanager
-systemctl enable NetworkManager
-systemctl enable gdm
-```
-
-By default, gnome will include gdm.
-
-Alternatively, install KDE with network manager. Note that `libsamplerate` fixes some sound quality issues (crackling in some sections of music, notably vocal). This affects "automatic" resampling in VLC, pulseaudio, and pipewire, when resampling 44100Hz to 48000Hz for a 48000Hz Sennheiser DAC.
-
-```
-pacman -S nm-connection-editor network-manager-applet   \
-          plasma plasma-wayland-session dolphin konsole \
-          chromium kate okular gwenview libsamplerate
+pacman -S sddm hyprland kitty thunar thunar-volman gvfs   \
+          imv wofi pipewire pipewire-audio pipewire-pulse \
+          pavucontrol blueman nm-connection-editor swaybg \
+          network-manager-applet brightnessctl hyprlock
 systemctl enable NetworkManager
 systemctl enable sddm
+systemctl enable systemd-resolved
+systemctl enable bluetooth
 ```
+
+Note: systemd-resolved is required to make mdns work. It may also need to be enabled in NetworkManager settings.
+
+Other useful packages.
+
+```
+pacman -S man-db man-pages mg emacs-wayland lollypop    \
+          flatpak gcr
+```
+Note: gcr is required for graphical pinentry, otherwise it reverts to curses.
+
 
 ## Finally reboot
 
